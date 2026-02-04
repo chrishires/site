@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "site"
+  title: "Chris Hires"
   navbar:
     left:
       - href: index.qmd
