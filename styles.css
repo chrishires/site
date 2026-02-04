@@ -45,16 +45,6 @@
   --quarto-margin-width: 320px; /* reserve enough space for right-hand TOC */
 }
 
-/* Fallback / extra specificity in case theme CSS wins */
-.page-columns,
-#quarto-content,
-.quarto-container,
-main.content,
-.page-columns .content {
-  max-width: 960px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
 
 /* =========================================================
    RIGHT-HAND TOC (PAGE NAV) FIXES
@@ -62,11 +52,29 @@ main.content,
 
 /* Ensure main content never flows under the TOC */
 .page-columns {
-  grid-template-columns: minmax(0, 1fr) var(--quarto-margin-width);
+  /* Quarto lays out pages with a central content column and a right margin column.
+     Define both explicitly so the TOC never overlaps the content. */
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, var(--quarto-body-width))
+    minmax(0, var(--quarto-margin-width))
+    minmax(0, 1fr);
+  column-gap: 2rem;
+}
+
+/* Ensure the main content column actually uses the body width */
+main.content {
+  max-width: var(--quarto-body-width);
+}
+
+/* Ensure the right margin sidebar (where the TOC lives) has enough space */
+#quarto-margin-sidebar {
+  width: var(--quarto-margin-width);
 }
 
 /* Constrain TOC width and add breathing room */
-.toc {
+.toc,
+#TOC {
   max-width: 280px;
   padding-left: 1.5rem;
 }
