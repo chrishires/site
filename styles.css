@@ -41,8 +41,8 @@
    Overriding these is the most reliable way to widen the post body,
    especially when a right-side TOC column is present. */
 :root {
-  --quarto-body-width: 960px;
-  --quarto-margin-width: 240px;
+  --quarto-body-width: 900px;   /* slightly narrower, better balance */
+  --quarto-margin-width: 320px; /* reserve enough space for right-hand TOC */
 }
 
 /* Fallback / extra specificity in case theme CSS wins */
@@ -54,6 +54,38 @@ main.content,
   max-width: 960px !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+/* =========================================================
+   RIGHT-HAND TOC (PAGE NAV) FIXES
+   ========================================================= */
+
+/* Ensure main content never flows under the TOC */
+.page-columns {
+  grid-template-columns: minmax(0, 1fr) var(--quarto-margin-width);
+}
+
+/* Constrain TOC width and add breathing room */
+.toc {
+  max-width: 280px;
+  padding-left: 1.5rem;
+}
+
+/* Optional: soften TOC typography (more Notion-like) */
+.toc a {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.toc a:hover {
+  color: #000;
+}
+
+/* On smaller screens, stack content and hide the TOC */
+@media (max-width: 1200px) {
+  .toc {
+    display: none;
+  }
 }
 
 /* =========================================================
