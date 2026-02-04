@@ -11,7 +11,7 @@
 
 /* Site title (acts like a Notion page title) */
 .navbar-brand {
-  font-size: 2.4rem;        /* slightly larger than before */
+  font-size: 2.6rem;        /* slightly larger than before */
   font-weight: 700;         /* bold like Notion page titles */
   line-height: 1.2;
   padding: 0;
@@ -37,9 +37,23 @@
    CONTENT WIDTH
    ========================================================= */
 
-.page-columns {
-  max-width: 960px;   /* slightly narrower than Quarto default */
-  margin: auto;
+/* Quarto uses CSS variables to size the main content column and margins.
+   Overriding these is the most reliable way to widen the post body,
+   especially when a right-side TOC column is present. */
+:root {
+  --quarto-body-width: 960px;
+  --quarto-margin-width: 240px;
+}
+
+/* Fallback / extra specificity in case theme CSS wins */
+.page-columns,
+#quarto-content,
+.quarto-container,
+main.content,
+.page-columns .content {
+  max-width: 960px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* =========================================================
@@ -53,7 +67,7 @@ body {
 /* Headings */
 h1 {
   font-size: 2.6rem;   /* Notion-like page title */
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
   margin-top: 2.5rem;
   margin-bottom: 1.25rem;
