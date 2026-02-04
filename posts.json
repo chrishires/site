@@ -1,0 +1,9 @@
+{
+  "posts": [
+    {
+      "slug": "nhl-injuries",
+      "repo": "chrishires/NHL-Injuries",
+      "notebook": "post.ipynb"
+    }
+  ]
+}

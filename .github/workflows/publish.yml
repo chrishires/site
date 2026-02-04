@@ -28,6 +28,10 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Sync posts
+        run: |
+          python scripts/sync_posts.py
+
       - name: Render Quarto website
         run: |
           quarto render
