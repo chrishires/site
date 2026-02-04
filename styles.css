@@ -1,30 +1,29 @@
-/* =========================================================
-   NAVBAR → NOTION-STYLE HEADER
-   ========================================================= */
+/* css styles */
+/* --- NAVBAR → NOTION-STYLE HEADER --- */
 
 .navbar {
   background: none !important;
   border: none !important;
-  padding-top: 2.75rem;
-  padding-bottom: 1.75rem;
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
 }
 
-/* Site title (acts like a Notion page title) */
+/* Site title (left side) */
 .navbar-brand {
-  font-size: 2.6rem;        /* slightly larger than before */
-  font-weight: 700;         /* bold like Notion page titles */
+  font-size: 2.4rem;        /* close to H1 */
+  font-weight: 700;
   line-height: 1.2;
   padding: 0;
-  margin-right: 2.25rem;
-  color: #000 !important;   /* force black (Bootstrap override) */
+  margin-right: 2rem;
+  color:#000
 }
 
-/* Nav links (light, understated) */
+/* Nav links */
 .navbar-nav .nav-link {
   font-size: 1rem;
   font-weight: 400;
   padding: 0;
-  margin-right: 1.5rem;
+  margin-right: 1.25rem;
   color: #555;
 }
 
@@ -33,108 +32,45 @@
   text-decoration: none;
 }
 
-/* =========================================================
-   CONTENT WIDTH
-   ========================================================= */
+/* --- CONTENT WIDTH --- */
 
-/* Quarto uses CSS variables to size the main content column and margins.
-   Overriding these is the most reliable way to widen the post body,
-   especially when a right-side TOC column is present. */
-:root {
-  --quarto-body-width: 900px;   /* slightly narrower, better balance */
-  --quarto-margin-width: 320px; /* reserve enough space for right-hand TOC */
-}
-
-
-/* =========================================================
-   RIGHT-HAND TOC (PAGE NAV) FIXES
-   ========================================================= */
-
-/* Ensure main content never flows under the TOC */
 .page-columns {
-  /* Quarto lays out pages with a central content column and a right margin column.
-     Define both explicitly so the TOC never overlaps the content. */
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, var(--quarto-body-width))
-    minmax(0, var(--quarto-margin-width))
-    minmax(0, 1fr);
-  column-gap: 2rem;
+  margin: auto;
 }
 
-/* Ensure the main content column actually uses the body width */
-main.content {
-  max-width: var(--quarto-body-width);
-}
-
-/* Ensure the right margin sidebar (where the TOC lives) has enough space */
-#quarto-margin-sidebar {
-  width: var(--quarto-margin-width);
-}
-
-/* Constrain TOC width and add breathing room */
-.toc,
-#TOC {
-  max-width: 280px;
-  padding-left: 1.5rem;
-}
-
-/* Optional: soften TOC typography (more Notion-like) */
-.toc a {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.toc a:hover {
-  color: #000;
-}
-
-/* On smaller screens, stack content and hide the TOC */
-@media (max-width: 1200px) {
-  .toc {
-    display: none;
-  }
-}
-
-/* =========================================================
-   TYPOGRAPHY & VERTICAL RHYTHM
-   ========================================================= */
+/* --- VERTICAL SPACING --- */
 
 body {
   line-height: 1.65;
 }
 
-/* Headings */
+h1, h2, h3 {
+  margin-top: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+p {
+  margin-bottom: 1.2rem;
+}
+
+/* --- HEADINGS --- */
+
 h1 {
-  font-size: 2.6rem;   /* Notion-like page title */
-  font-weight: 700;
-  line-height: 1.2;
-  margin-top: 2.5rem;
-  margin-bottom: 1.25rem;
+  font-size: 2.4rem;
+  font-weight: 600;
 }
 
 h2 {
   font-size: 1.6rem;
   font-weight: 600;
-  margin-top: 2.25rem;
-  margin-bottom: 0.75rem;
 }
 
 h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
 }
 
-/* Paragraph spacing */
-p {
-  margin-bottom: 1.2rem;
-}
-
-/* =========================================================
-   CODE BLOCKS (SUBTLE, NOT BLOGGY)
-   ========================================================= */
+/* --- CODE BLOCKS --- */
 
 pre {
   background: #f7f7f7;
