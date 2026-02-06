@@ -4,5 +4,5 @@ listing:
   contents: posts
   sort: "date desc"
   type: default
-  read-more: "Read more →"
+  max-description-length: 260
 ---
