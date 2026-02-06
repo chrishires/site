@@ -9,7 +9,6 @@
   --notion-link-underline-hover: rgba(17, 17, 17, 0.45);
 }
 
-/* Your SCSS $variables won't apply in CSS; set fonts directly */
 body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   letter-spacing: -0.01em;
@@ -88,7 +87,9 @@ code, pre, kbd, samp {
 a, a:visited {
   color: #222 !important;
   text-decoration: none;
-  border-bottom: 1px solid var(--notion-link-underline);
+  font-weight: 500; /* subtle emphasis without shouting */
+  border-bottom: 2px solid var(--notion-link-underline);
+  padding-bottom: 1px; /* gives underline visual breathing room */
 }
 
 a:hover, a:focus {
