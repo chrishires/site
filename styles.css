@@ -1,26 +1,59 @@
-/* css styles */
+/* =========================================================
+   NOTION-LIKE BASE TYPOGRAPHY
+   ========================================================= */
 
-/* Typography */
-$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
-$font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+:root {
+  --notion-text: #111;
+  --notion-muted: #555;
+  --notion-link-underline: rgba(17, 17, 17, 0.18);
+  --notion-link-underline-hover: rgba(17, 17, 17, 0.45);
+}
 
-/* --- NAVBAR → NOTION-STYLE HEADER --- */
+/* Your SCSS $variables won't apply in CSS; set fonts directly */
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.65;
+  color: var(--notion-text);
+}
+
+code, pre, kbd, samp {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* =========================================================
+   NAVBAR → NOTION-STYLE HEADER
+   - Transparent at top
+   - Solid/blur when it pins on scroll (prevents text overlay mess)
+   ========================================================= */
 
 .navbar {
-  background: none
+  background: transparent;        /* IMPORTANT: valid + intentional */
   border: none !important;
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
+  transition: background-color 160ms ease, box-shadow 160ms ease, backdrop-filter 160ms ease;
 }
 
-/* Site title (left side) */
+/* Quarto uses Headroom classes when navbar hides/shows on scroll.
+   These selectors catch the “pinned” state so we can add a background. */
+.headroom--pinned .navbar,
+.navbar.fixed-top,
+.navbar.is-fixed {
+  background-color: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Site title */
 .navbar-brand {
-  font-size: 2.4rem;        /* close to H1 */
+  font-size: 2.4rem;
   font-weight: 800;
   line-height: 1.2;
   padding: 0;
   margin-right: 2rem;
-  color:#000
+  color: #000 !important;         /* fixes “white title” bootstrap behavior */
 }
 
 /* Nav links */
@@ -29,35 +62,51 @@ $font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, M
   font-weight: 400;
   padding: 0;
   margin-right: 1.25rem;
-  color: #555;
+  color: var(--notion-muted) !important;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #000;
+  color: #000 !important;
   text-decoration: none;
 }
 
-/* --- CONTENT WIDTH --- */
+/* =========================================================
+   CONTENT WIDTH
+   (Leave it alone since you like current width)
+   ========================================================= */
 
 .page-columns {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* --- VERTICAL SPACING --- */
+/* =========================================================
+   LINKS — DARK / NOTION-LIKE
+   ========================================================= */
 
-body {
-  letter-spacing: -0.01em;
-  line-height: 1.65;
-}
-
-/* Links: quiet underline */
-a {
+/* Force calm dark links (Bootstrap otherwise makes them blue) */
+a, a:visited {
+  color: #222 !important;
   text-decoration: none;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.18);
+  border-bottom: 1px solid var(--notion-link-underline);
 }
-a:hover {
-  border-bottom-color: rgba(17, 17, 17, 0.45);
+
+a:hover, a:focus {
+  color: #000 !important;
+  border-bottom-color: var(--notion-link-underline-hover);
 }
+
+/* Don’t draw underline borders on nav links/buttons */
+.navbar a,
+.navbar-nav .nav-link,
+.btn,
+.btn a {
+  border-bottom: none !important;
+}
+
+/* =========================================================
+   SPACING & HEADINGS
+   ========================================================= */
 
 h1, h2, h3 {
   margin-top: 2.2rem;
@@ -67,8 +116,6 @@ h1, h2, h3 {
 p {
   margin-bottom: 1.2rem;
 }
-
-/* --- HEADINGS --- */
 
 h1 {
   font-size: 2.4rem;
@@ -85,7 +132,9 @@ h3 {
   font-weight: 600;
 }
 
-/* --- CODE BLOCKS --- */
+/* =========================================================
+   CODE BLOCKS
+   ========================================================= */
 
 pre {
   background: #f7f7f7;
@@ -94,5 +143,5 @@ pre {
 }
 
 code {
-  font-size: 0.9em;
+  font-size: 0.92em;
 }
