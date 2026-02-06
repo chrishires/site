@@ -4,7 +4,7 @@ project:
 website:
   title: "Chris Hires"
   navbar:
-    background: primary
+    background: ffffff
     search: true
     left:
       - href: index.qmd
