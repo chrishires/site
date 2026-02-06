@@ -1,7 +1,8 @@
 ---
-title: "site"
+title: ""
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  read-more: "Read more →"
 ---
-
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
