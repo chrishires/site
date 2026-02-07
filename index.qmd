@@ -1,5 +1,6 @@
 ---
 title: ""
+toc: false
 listing:
   id: recent-posts
   contents: posts
@@ -11,10 +12,7 @@ listing:
 
 Hi — I’m Chris.
 
-I work at the intersection of data science, statistics, and decision-making.
-This site is a place for exploratory analysis and statistical modeling to 
-answer questions about current events (often pertaining to sports). You can find 
-some recent posts below. If you'd like to get in touch, please feel free to reach
+I work at the intersection of data science, statistics, and decision-making. This site is a place for answering questions related to current events (often sports) with exploratory analysis and statistical modeling. You can find some recent posts below. If you'd like to get in touch, please feel free to reach
 out:
 
 [LinkedIn](http://www.linkedin.com/in/chrishires)  

@@ -170,14 +170,18 @@ code {
   color: #000;
 }
 
-/* Listing descriptions should look like normal body text */
+/* =========================================================
+   LISTING DESCRIPTION — NORMAL BODY WEIGHT
+   ========================================================= */
+
 .quarto-listing .listing-description,
 .quarto-listing .listing-description p {
-  font-weight: 400;
+  font-weight: 400 !important;
+  color: var(--notion-text);
 }
 
-/* If descriptions contain links, don't make them bold */
+/* If descriptions contain links, keep them normal-weight */
 .quarto-listing .listing-description a,
 .quarto-listing .listing-description a:visited {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
