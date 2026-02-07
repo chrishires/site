@@ -1,8 +1,28 @@
 ---
 title: ""
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  max-description-length: 260
 ---
+
+Hi — I’m Chris.
+
+I work at the intersection of data science, statistics, and decision-making.
+This site is a place for exploratory analysis and statistical modeling to 
+answer questions about current events (often pertaining to sports). You can find 
+some recent posts below. If you'd like to get in touch, please feel free to reach
+out:
+
+[LinkedIn](http://www.linkedin.com/in/chrishires)
+[GitHub](http://www.github.com/chrishires)
+[Email](mailto:chrishires@gmail.com)
+
+---
+
+## Recent writing
+
+::: {.listing}
+contents: posts
+sort: "date desc"
+limit: 3
+max-description-length: 220
+:::
+
+[View all posts →](/posts/)

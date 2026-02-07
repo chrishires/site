@@ -4,4 +4,6 @@ listing:
     contents: posts
     sort: "date desc"
     type: default
+    max-description-length: 300
+
 ---
