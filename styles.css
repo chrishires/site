@@ -169,3 +169,15 @@ code {
   font-size: 1.5rem;
   color: #000;
 }
+
+/* Listing descriptions should look like normal body text */
+.quarto-listing .listing-description,
+.quarto-listing .listing-description p {
+  font-weight: 400;
+}
+
+/* If descriptions contain links, don't make them bold */
+.quarto-listing .listing-description a,
+.quarto-listing .listing-description a:visited {
+  font-weight: 400;
+}
