@@ -10,6 +10,7 @@ website:
         text: Home
       - href: posts.qmd
         text: Posts
+  google-analytics: "G-LJ3R753XPB"
 
 format:
   html:

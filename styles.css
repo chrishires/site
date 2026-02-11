@@ -16,6 +16,17 @@ body {
   color: var(--notion-text);
 }
 
+/* Reduce heaviness of bolded body text */
+p strong,
+p b,
+li strong,
+li b,
+blockquote strong,
+blockquote b {
+  font-weight: 600;
+}
+
+
 code, pre, kbd, samp {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
