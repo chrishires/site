@@ -21,7 +21,7 @@ out:
 
 ---
 
-## Recent Writing
+## Recent Posts
 
 ::: {#recent-posts}
 :::
