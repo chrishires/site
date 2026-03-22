@@ -10,8 +10,8 @@
 }
 
 body {
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  font-weight: 100;
+  font-family: "system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-weight: 300;
   letter-spacing: -0.01em;
   line-height: 1.65;
   color: var(--notion-text);
@@ -39,7 +39,7 @@ code, pre, kbd, samp {
    ========================================================= */
 
 .navbar {
-  background: transparent;        /* IMPORTANT: valid + intentional */
+  background: transparent;
   border: none !important;
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
@@ -99,7 +99,7 @@ code, pre, kbd, samp {
 a, a:visited {
   color: #222 !important;
   text-decoration: none;
-  font-weight: 500; /* subtle emphasis without shouting */
+  font-weight: 400; /* subtle emphasis without shouting */
   border-bottom: 2px solid var(--notion-link-underline);
   padding-bottom: 1px; /* gives underline visual breathing room */
 }
