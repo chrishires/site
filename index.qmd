@@ -26,4 +26,4 @@ out:
 ::: {#recent-posts}
 :::
 
-[View all posts →](/posts.html/)
+[View all posts →](/posts.html)
