@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6,
 .navbar-brand,
 .navbar-title {
   font-family: "Computer Modern Serif", serif;
-  font-weight: 400; /* CMU Serif Roman -- headings default to bold in browsers otherwise, pulling the Bold face instead */
+  font-weight: 500; /* CMU Serif Roman -- headings default to bold in browsers otherwise, pulling the Bold face instead */
   letter-spacing: -0.02em; /* tiny nudge tighter -- increase magnitude (e.g. -0.02em) for more */
 }
 
@@ -76,7 +76,7 @@ h1, h2, h3, h4, h5, h6,
 
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  font-weight: 200;
+  font-weight: 300;
   letter-spacing: -0.01em;
   line-height: 1.65;
   color: var(--color-text);
@@ -270,7 +270,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 2.0rem;
   font-weight: 500; /* CMU Serif Roman -- was 600, size alone now carries the hierarchy */
   display: inline-block; /* shrinks to content width so the ::after bar below can match text width exactly */
 }
@@ -289,7 +289,7 @@ h2::after {
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 500; /* CMU Serif Roman -- was 600 */
 }
 
@@ -339,9 +339,21 @@ h3 {
   color: var(--color-text) !important;
 }
 
-/* Table striping tuned to the warm palette */
-.table-striped > tbody > tr:nth-of-type(odd) > * {
-  background-color: var(--color-surface);
+/* Table striping -- bg-outer gives more contrast against the page
+   than surface did (surface and bg are only ~6-8 RGB units apart,
+   too subtle to read as striping). Also overriding Bootstrap 5.3's
+   own --bs-table-striped-bg variable directly, in case that's what's
+   actually driving the visible (if faint) striping rather than our
+   nth-of-type rule. */
+.table, table {
+  --bs-table-striped-bg: var(--color-bg-outer);
+  --bs-table-striped-color: var(--color-text);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > *,
+table tr:nth-child(odd) td,
+table tr:nth-child(odd) th {
+  background-color: var(--color-bg-outer) !important;
 }
 
 table {
@@ -466,11 +478,18 @@ hr {
   margin: 2rem 0;
 }
 
-blockquote {
+blockquote,
+.blockquote {
   border-left: 3px solid var(--color-accent);
   padding-left: 1rem;
-  color: var(--color-text);
   font-style: normal;
+}
+
+blockquote,
+blockquote p,
+.blockquote,
+.blockquote p {
+  color: var(--color-text) !important;
 }
 
 /* Dates/metadata borrow the mono font already used for code,
