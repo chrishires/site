@@ -255,7 +255,7 @@ h1 {
 
 h2 {
   font-size: 1.6rem;
-  font-weight: 400; /* CMU Serif Roman -- was 600, size alone now carries the hierarchy */
+  font-weight: 500; /* CMU Serif Roman -- was 600, size alone now carries the hierarchy */
   display: inline-block; /* shrinks to content width so the ::after bar below can match text width exactly */
 }
 
