@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6,
 .navbar-brand,
 .navbar-title {
   font-family: "Computer Modern Serif", serif;
-  font-weight: 500; /* CMU Serif Roman -- headings default to bold in browsers otherwise, pulling the Bold face instead */
+  font-weight: 400; /* CMU Serif Roman -- headings default to bold in browsers otherwise, pulling the Bold face instead */
   letter-spacing: -0.02em; /* tiny nudge tighter -- increase magnitude (e.g. -0.02em) for more */
 }
 
@@ -155,8 +155,8 @@ code, pre, kbd, samp {
    Bootstrap -- see the body.quarto-dark scoping fix above for the
    real cause. Plain selector is sufficient. */
 .navbar-brand {
-  font-size: 2.5rem;
-  font-weight: 400; /* CMU Serif Roman, not Bold -- was 700 from the pre-CM sans-serif treatment */
+  font-size: 2.9rem;
+  font-weight: 500; /* CMU Serif Roman, not Bold -- was 700 from the pre-CM sans-serif treatment */
   line-height: 1.2;
   padding: 0;
   margin-right: 2rem;
