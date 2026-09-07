@@ -14,10 +14,16 @@ website:
 
 format:
   html:
+    anchor-sections: false
+    include-in-header:
+      - text: |
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css">
     toc: true
     code-fold: true
     code-summary: "Show Code"
     css: styles.css
-
-
+    theme:
+      light: [cosmo, custom.css]   # match whatever your current theme + stylesheet actually are
+      dark: [darkly, custom.css]
+    respect-user-color-scheme: true
 
