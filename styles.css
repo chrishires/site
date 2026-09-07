@@ -14,6 +14,7 @@
   --color-accent: #C97B4A;
   --color-accent-rgb: 201, 123, 74;
   --color-accent-dark: #A85F35;
+  --color-accent-cool: #4A7A91; /* for functional UI state (TOC position) -- rust stays reserved for rarer, real emphasis */
   --color-link-underline: rgba(43, 38, 32, 0.18);
   --color-link-underline-hover: rgba(43, 38, 32, 0.45);
 }
@@ -22,14 +23,15 @@
    light/dark theme pair is active, or when respect-user-color-scheme
    follows the OS. Every rule below reads the tokens above via var(),
    so overriding just the tokens here re-themes the whole site. */
-/* Scoped to html specifically -- NOT the bare [data-bs-theme="dark"]
-   attribute selector, which also matches Bootstrap's own <nav
-   data-bs-theme="dark">. That's Bootstrap's internal navbar-theming
-   marker, unrelated to our site-wide light/dark toggle, and it was
-   silently activating these dark tokens (a light-cream --color-text
-   meant for a dark background) inside the navbar on an otherwise
-   light-mode page -- which is what made "Chris Hires" wash out. */
-html[data-bs-theme="dark"] {
+/* Confirmed via devtools on the live site: Quarto's actual toggle here
+   swaps a class on <body> (quarto-light <-> quarto-dark), NOT the
+   data-bs-theme attribute on <html> -- that attribute only ever
+   appears on <nav data-bs-theme="dark">, which is Bootstrap's internal
+   dark-navbar marker and unrelated to the page-wide toggle. The
+   previous html[data-bs-theme="dark"] selector never matched
+   anything, which is why toggling changed nothing despite the body
+   class genuinely flipping. */
+body.quarto-dark {
   --color-bg: #1E1A14;
   --color-bg-rgb: 30, 26, 20;
   --color-bg-outer: #15110C;
@@ -41,6 +43,7 @@ html[data-bs-theme="dark"] {
   --color-accent: #DB8F5D;
   --color-accent-rgb: 219, 143, 93;
   --color-accent-dark: #E8A579;
+  --color-accent-cool: #6FA3B8;
   --color-link-underline: rgba(237, 230, 216, 0.18);
   --color-link-underline-hover: rgba(237, 230, 216, 0.45);
 }
@@ -73,7 +76,7 @@ h1, h2, h3, h4, h5, h6,
 
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  font-weight: 300;
+  font-weight: 200;
   letter-spacing: -0.01em;
   line-height: 1.65;
   color: var(--color-text);
@@ -135,12 +138,25 @@ code, pre, kbd, samp {
   box-shadow: 0 6px 18px rgba(var(--color-text-rgb), 0.08);
 }
 
+/* Headroom adds --pinned whenever you scroll up (that's how the nav
+   reappears while scrolling up mid-page), and it can still be present
+   once you're back at the very top -- which was leaving the solid
+   scrolled-state background showing instead of reverting to
+   transparent. Force transparent whenever --top is present, regardless
+   of whether --pinned is also still set. */
+.headroom--top .navbar {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
 /* Site title. This was never actually a specificity fight with
-   Bootstrap -- see the html[data-bs-theme="dark"] scoping fix above
-   for the real cause. Plain selector is sufficient. */
+   Bootstrap -- see the body.quarto-dark scoping fix above for the
+   real cause. Plain selector is sufficient. */
 .navbar-brand {
-  font-size: 2.9rem;
-  font-weight: 500; /* CMU Serif Roman, not Bold -- was 700 from the pre-CM sans-serif treatment */
+  font-size: 2.5rem;
+  font-weight: 400; /* CMU Serif Roman, not Bold -- was 700 from the pre-CM sans-serif treatment */
   line-height: 1.2;
   padding: 0;
   margin-right: 2rem;
@@ -249,12 +265,12 @@ p {
 }
 
 h1 {
-  font-size: 2.4rem;
+  font-size: 2.9rem;
   font-weight: 500; /* CMU Serif Roman -- was 700 from the pre-CM treatment */
 }
 
 h2 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 500; /* CMU Serif Roman -- was 600, size alone now carries the hierarchy */
   display: inline-block; /* shrinks to content width so the ::after bar below can match text width exactly */
 }
@@ -309,12 +325,13 @@ h3 {
 }
 
 /* "On this page" TOC: swap Bootstrap's default blue active-link
-   for the accent color */
+   for the cool accent -- this is a functional UI state (where you are
+   on the page), not the kind of one-off emphasis rust is reserved for */
 #TOC .nav-link.active,
 #toc-actions .nav-link.active,
 .sidebar nav[role="doc-toc"] a.active {
-  color: var(--color-accent) !important;
-  border-left-color: var(--color-accent) !important;
+  color: var(--color-accent-cool) !important;
+  border-left-color: var(--color-accent-cool) !important;
 }
 
 #TOC .nav-link:hover,
@@ -385,11 +402,28 @@ body.quarto-dark .quarto-color-scheme-toggle .bi::before,
    CODE BLOCKS
    ========================================================= */
 
-pre {
-  background: var(--color-surface);
+pre,
+div.sourceCode,
+.cell-code,
+.cell > .sourceCode {
+  background: var(--color-surface) !important;
   border-radius: 6px;
   padding: 1rem;
 }
+
+/* Syntax highlighting -- replacing Quarto's default theme (built for
+   a plain white/gray background) with colors that fit the palette.
+   These are pandoc/Skylighting's standard span classes: kw=keyword,
+   st=string, dv/fl=numeric literal, co=comment, fu=function call.
+   Numbers get the rust accent (sparingly, matching the site's
+   cool-default/warm-accent convention), strings get slate, everything
+   else stays close to body text rather than introducing new hues. */
+span.kw { color: var(--color-text); font-weight: 600; }
+span.st { color: var(--color-accent-cool); }
+span.dv, span.fl, span.bn { color: var(--color-accent); }
+span.co { color: var(--color-muted); font-style: italic; }
+span.fu { color: var(--color-text); }
+span.va, span.vs { color: var(--color-text); }
 
 code {
   font-size: 0.92em;
@@ -435,7 +469,7 @@ hr {
 blockquote {
   border-left: 3px solid var(--color-accent);
   padding-left: 1rem;
-  color: var(--color-muted);
+  color: var(--color-text);
   font-style: normal;
 }
 
