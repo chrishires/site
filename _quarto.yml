@@ -23,7 +23,7 @@ format:
     code-summary: "Show Code"
     css: styles.css
     theme:
-      light: [cosmo, custom.css]   # match whatever your current theme + stylesheet actually are
-      dark: [darkly, custom.css]
+      light: cosmo
+      dark: darkly
     respect-user-color-scheme: true
 
