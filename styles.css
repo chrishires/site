@@ -2,21 +2,25 @@
    BASE TYPOGRAPHY
    ========================================================= */
 
+/* Palette pulled from the LangWatch chart: warm off-white page,
+   light-gray bar-track surface, near-black ink, burnt-orange accent.
+   bg-outer currently equals bg (single flat background, no two-tone
+   frame) -- give it its own value again to bring the mat back. */
 :root {
-  --color-bg: #F1E9DA;
-  --color-bg-rgb: 241, 233, 218;
-  --color-bg-outer: #E7DCC4;
-  --color-surface: #F7F1E4;
-  --color-text: #2B2620;
-  --color-text-rgb: 43, 38, 32;
-  --color-text-hover: #1A1611;
-  --color-muted: #6B6152;
-  --color-accent: #C97B4A;
-  --color-accent-rgb: 201, 123, 74;
-  --color-accent-dark: #A85F35;
-  --color-accent-cool: #4A7A91; /* for functional UI state (TOC position) -- rust stays reserved for rarer, real emphasis */
-  --color-link-underline: rgba(43, 38, 32, 0.18);
-  --color-link-underline-hover: rgba(43, 38, 32, 0.45);
+  --color-bg: #F2F0EC;
+  --color-bg-rgb: 242, 240, 236;
+  --color-bg-outer: var(--color-bg);
+  --color-surface: #E5E3DE;
+  --color-text: #1D1D1F;
+  --color-text-rgb: 29, 29, 31;
+  --color-text-hover: #0B0B0C;
+  --color-muted: #6B6A67;
+  --color-accent: #E07335;
+  --color-accent-rgb: 224, 115, 53;
+  --color-accent-dark: #BF5A22;
+  --color-accent-cool: #4A7A91; /* for functional UI state (TOC position) -- orange stays reserved for rarer, real emphasis */
+  --color-link-underline: rgba(29, 29, 31, 0.18);
+  --color-link-underline-hover: rgba(29, 29, 31, 0.45);
 }
 
 /* Quarto sets data-bs-theme="dark" on <html> when the dark side of a
@@ -32,20 +36,20 @@
    anything, which is why toggling changed nothing despite the body
    class genuinely flipping. */
 body.quarto-dark {
-  --color-bg: #1E1A14;
-  --color-bg-rgb: 30, 26, 20;
-  --color-bg-outer: #15110C;
-  --color-surface: #29231A;
-  --color-text: #EDE6D8;
-  --color-text-rgb: 237, 230, 216;
-  --color-text-hover: #FFFDF8;
-  --color-muted: #B0A48D;
-  --color-accent: #DB8F5D;
-  --color-accent-rgb: 219, 143, 93;
-  --color-accent-dark: #E8A579;
+  --color-bg: #1C1C1E;
+  --color-bg-rgb: 28, 28, 30;
+  --color-bg-outer: var(--color-bg);
+  --color-surface: #2A2A2E;
+  --color-text: #EDECE8;
+  --color-text-rgb: 237, 236, 232;
+  --color-text-hover: #FFFFFF;
+  --color-muted: #A3A19C;
+  --color-accent: #EC8550;
+  --color-accent-rgb: 236, 133, 80;
+  --color-accent-dark: #F2A378;
   --color-accent-cool: #6FA3B8;
-  --color-link-underline: rgba(237, 230, 216, 0.18);
-  --color-link-underline-hover: rgba(237, 230, 216, 0.45);
+  --color-link-underline: rgba(237, 236, 232, 0.18);
+  --color-link-underline-hover: rgba(237, 236, 232, 0.45);
 }
 
 /* Computer Modern for headers only -- body/nav/labels stay the SF
@@ -62,6 +66,11 @@ h1, h2, h3, h4, h5, h6,
   font-family: "Computer Modern Serif", serif;
   font-weight: 500; /* CMU Serif Roman -- headings default to bold in browsers otherwise, pulling the Bold face instead */
   letter-spacing: -0.02em; /* tiny nudge tighter -- increase magnitude (e.g. -0.02em) for more */
+  /* CM ships only Roman and Bold (no semibold), and 600 would snap to
+     the much heavier Bold Extended. A hairline stroke thickens the
+     Roman strokes toward a semibold look instead -- raise to ~0.6px
+     for heavier, or drop it and set font-weight: 700 for true bold. */
+  -webkit-text-stroke: 0.4px currentColor;
 }
 
 /* Italic accent word within an otherwise-sans sentence, the
@@ -84,9 +93,9 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Two-tone frame: body sits on the darker/muted outer mat
-   (--color-bg-outer), while the actual content column gets the
-   lighter established --color-bg as an inner panel -- unverified
+/* Two-tone frame (currently flat -- bg-outer is aliased to bg): body
+   sits on the outer mat (--color-bg-outer), while the actual content
+   column gets --color-bg as an inner panel -- unverified
    against your real Quarto grid (.page-columns etc. may already
    manage max-width/centering, and nesting another one here could
    conflict) -- if TOC placement or listing grid layout looks wrong,
@@ -339,21 +348,20 @@ h3 {
   color: var(--color-text) !important;
 }
 
-/* Table striping -- bg-outer gives more contrast against the page
-   than surface did (surface and bg are only ~6-8 RGB units apart,
-   too subtle to read as striping). Also overriding Bootstrap 5.3's
-   own --bs-table-striped-bg variable directly, in case that's what's
-   actually driving the visible (if faint) striping rather than our
+/* Table striping -- uses surface (the bar-track gray), since bg-outer
+   now matches bg and would make stripes invisible. Also overriding
+   Bootstrap 5.3's own --bs-table-striped-bg variable directly, in case
+   that's what's actually driving the visible striping rather than our
    nth-of-type rule. */
 .table, table {
-  --bs-table-striped-bg: var(--color-bg-outer);
+  --bs-table-striped-bg: var(--color-surface);
   --bs-table-striped-color: var(--color-text);
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) > *,
 table tr:nth-child(odd) td,
 table tr:nth-child(odd) th {
-  background-color: var(--color-bg-outer) !important;
+  background-color: var(--color-surface) !important;
 }
 
 table {
@@ -387,13 +395,13 @@ table {
 
 /* Light mode: moon glyph (an invitation to switch to dark) */
 .quarto-color-scheme-toggle:not(.alternate) .bi::before {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236B6152"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>') !important;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236B6A67"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>') !important;
 }
 
 /* Dark mode: sun glyph (an invitation to switch back to light) */
 body.quarto-dark .quarto-color-scheme-toggle .bi::before,
 .quarto-color-scheme-toggle.alternate .bi::before {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23B0A48D" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>') !important;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A3A19C" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>') !important;
 }
 
 .navbar .aa-DetachedSearchButton {
