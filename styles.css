@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6,
      the much heavier Bold Extended. A hairline stroke thickens the
      Roman strokes toward a semibold look instead -- raise to ~0.6px
      for heavier, or drop it and set font-weight: 700 for true bold. */
-  -webkit-text-stroke: 0.4px currentColor;
+  -webkit-text-stroke: 0.6px currentColor;
 }
 
 /* Italic accent word within an otherwise-sans sentence, the
@@ -164,7 +164,7 @@ code, pre, kbd, samp {
    Bootstrap -- see the body.quarto-dark scoping fix above for the
    real cause. Plain selector is sufficient. */
 .navbar-brand {
-  font-size: 2.9rem;
+  font-size: clamp(1.9rem, 1.2rem + 3.5vw, 2.9rem); /* scales with viewport: ~2rem on phones, full 2.9rem from ~1000px wide */
   font-weight: 500; /* CMU Serif Roman, not Bold -- was 700 from the pre-CM sans-serif treatment */
   line-height: 1.2;
   padding: 0;
@@ -274,12 +274,12 @@ p {
 }
 
 h1 {
-  font-size: 2.9rem;
+  font-size: clamp(1.9rem, 1.2rem + 3.5vw, 2.9rem); /* same fluid scale as .navbar-brand */
   font-weight: 500; /* CMU Serif Roman -- was 700 from the pre-CM treatment */
 }
 
 h2 {
-  font-size: 2.0rem;
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.0rem);
   font-weight: 500; /* CMU Serif Roman -- was 600, size alone now carries the hierarchy */
   display: inline-block; /* shrinks to content width so the ::after bar below can match text width exactly */
 }
