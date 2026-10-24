@@ -4,6 +4,8 @@ toc: false
 listing:
   id: recent-posts
   contents: posts
+  exclude:
+    hidden: true
   sort: "date desc"
   type: default
   max-items: 3
