@@ -18,6 +18,24 @@ format:
     include-in-header:
       - text: |
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css">
+    include-after-body:
+      # Footnote hovers copy the footnote's HTML once at page load. With
+      # MathJax 4 (Quarto 1.10+) typesetting finishes later, so hovers
+      # showed raw \(...\). Refresh each hover once MathJax is done.
+      - text: |
+          <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const ready = window.MathJax?.startup?.promise;
+            if (!ready) return;
+            ready.then(() => {
+              document.querySelectorAll('a[role="doc-noteref"]').forEach((ref) => {
+                const id = (ref.getAttribute("data-footnote-href") || ref.getAttribute("href") || "").replace(/^.*#\/?/, "");
+                const note = document.getElementById(id);
+                if (ref._tippy && note) ref._tippy.setContent(note.innerHTML);
+              });
+            });
+          });
+          </script>
     toc: true
     code-fold: true
     code-summary: "Show Code"

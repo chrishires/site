@@ -464,6 +464,31 @@ pre code {
 }
 
 /* =========================================================
+   FIGURES
+   ========================================================= */
+
+/* Notebook plot outputs get a fixed width attribute (e.g. width="811")
+   and only .figure-img, not Bootstrap's .img-fluid -- so a plot wider
+   than the ~800px body column overflowed it slightly. Cap every figure
+   image at its container; height:auto keeps the aspect ratio despite
+   the fixed height attribute. */
+.figure-img,
+.cell-output-display img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Captions: Quarto hard-codes #666, which inherits the body's 300
+   weight and washes out on the beige page. Derived from the text token
+   so it stays readable in dark mode too. */
+figcaption,
+.figure-caption,
+.panel-caption {
+  color: rgba(var(--color-text-rgb), 0.72) !important;
+  font-weight: 400;
+}
+
+/* =========================================================
    ACCENT DETAILS
    Small, low-visibility touchpoints that tie back to the
    chart accent color rather than the browser defaults.
@@ -509,28 +534,19 @@ time,
   color: var(--color-muted);
 }
 
-/* Footnote/citation hover popovers (Bootstrap .popover, enabled by
-   Quarto's footnotes-hover, on by default) */
-.popover {
+/* Footnote/cross-ref hover boxes. Quarto renders these with Tippy
+   (theme "quarto"), not Bootstrap's .popover -- confirmed in the
+   rendered HTML -- and its default is a white box in light mode.
+   Quarto disables the arrow, so no arrow styling is needed. */
+.tippy-box[data-theme~="quarto"] {
   background-color: var(--color-surface);
   border: 1px solid var(--color-link-underline-hover);
-  max-width: 320px;
-}
-
-.popover-body {
   color: var(--color-text);
   font-size: 0.9rem;
 }
 
-/* Bootstrap's popover arrow is placement-specific (top/bottom/left/right
-   each use a different pseudo-element); this covers the common cases but
-   check all four placements once footnotes are live */
-.popover .popover-arrow::before,
-.popover .popover-arrow::after,
-.bs-popover-top .popover-arrow::before,
-.bs-popover-bottom .popover-arrow::before {
-  border-top-color: var(--color-surface);
-  border-bottom-color: var(--color-surface);
+.tippy-box[data-theme~="quarto"] > .tippy-backdrop {
+  background-color: var(--color-surface);
 }
 
 /* Footnote reference marks: accent-colored rather than the default
@@ -550,6 +566,28 @@ mjx-container, .MathJax {
   color: inherit;
 }
 
+/* Inline math was pushing lines apart. MathJax scales math up (~130%)
+   to match the sans body's x-height, and the container inherits the
+   unitless line-height: 1.65 -- so its line box is 1.65 x the larger
+   font, taller than the surrounding text line. Zeroing it lets the
+   glyphs sit in the normal line (measured: math lines went from
+   29-36px pitch back to the plain-paragraph 28px, no clipping). */
+mjx-container[jax="CHTML"]:not([display="true"]) {
+  line-height: 0;
+}
+
+/* Display equations wider than the column (common on phones) scroll
+   sideways inside their own frame instead of widening the whole page.
+   Vertical padding keeps tall glyphs (roots, fractions) from being
+   clipped by overflow-y: hidden. */
+mjx-container[jax="CHTML"][display="true"] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5em 0;
+}
+
 /* =========================================================
    MOBILE NAV (HAMBURGER) VISIBILITY FIX
    ========================================================= */
@@ -560,12 +598,19 @@ mjx-container, .MathJax {
   height: 22px;
   padding: 0;
   position: relative;
+  /* Quarto sets flex-basis: content, which overrides width -- and since
+     the icon bars are absolutely positioned, "content" is 0px, so the
+     button collapsed and the icon spilled over the "C" of the title. */
+  flex: 0 0 28px;
+  margin-right: 0.75rem;
 }
 
 /* Middle bar lives on the span itself; ::before/::after are the other
    two. Bars are deliberately uneven lengths at rest (a small, quiet
    departure from the standard three-equal-lines hamburger) and morph
-   into a clean X on open via Bootstrap's .collapsed class toggle. */
+   into a clean X on open. Keyed on aria-expanded, not .collapsed:
+   Quarto's toggler ships without .collapsed until first opened, so
+   :not(.collapsed) showed the X at rest. */
 .navbar-toggler-icon {
   display: block;
   background-image: none !important;
@@ -598,17 +643,17 @@ mjx-container, .MathJax {
   top: 7px;
 }
 
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   background-color: transparent;
 }
 
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::before {
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
   width: 22px;
   top: 0;
   transform: rotate(45deg);
 }
 
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon::after {
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
   width: 22px;
   top: 0;
   transform: rotate(-45deg);
