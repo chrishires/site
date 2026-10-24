@@ -4,6 +4,11 @@
       "slug": "nhl-injuries",
       "repo": "chrishires/NHL-Injuries",
       "notebook": "post.ipynb"
+    },
+    {
+      "slug": "abs-sdt-pt1",
+      "repo": "chrishires/abs-sdt",
+      "notebook": "part1.ipynb"
     }
   ]
 }
