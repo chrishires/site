@@ -19,6 +19,8 @@
   --color-accent-rgb: 224, 115, 53;
   --color-accent-dark: #BF5A22;
   --color-accent-cool: #4A7A91; /* for functional UI state (TOC position) -- orange stays reserved for rarer, real emphasis */
+  --color-blue: #2563C9; /* the plot palette's blue -- orange's counterweight, used for info callouts */
+  --color-blue-rgb: 37, 99, 201;
   --color-link-underline: rgba(29, 29, 31, 0.18);
   --color-link-underline-hover: rgba(29, 29, 31, 0.45);
 }
@@ -48,6 +50,8 @@ body.quarto-dark {
   --color-accent-rgb: 236, 133, 80;
   --color-accent-dark: #F2A378;
   --color-accent-cool: #6FA3B8;
+  --color-blue: #6B9BEF;
+  --color-blue-rgb: 107, 155, 239;
   --color-link-underline: rgba(237, 236, 232, 0.18);
   --color-link-underline-hover: rgba(237, 236, 232, 0.45);
 }
@@ -486,6 +490,68 @@ figcaption,
 .panel-caption {
   color: rgba(var(--color-text-rgb), 0.72) !important;
   font-weight: 400;
+}
+
+/* =========================================================
+   FOOTNOTES (Quarto appendix)
+   ========================================================= */
+
+/* Quarto paints the appendix white (#fff) with a gray top rule, and
+   its "Footnotes" heading is an h2 -- so it picked up our section-h2
+   treatment (accent underline bar) while Quarto squashed it to 1em
+   at weight 600. Blend the block into the page and style the heading
+   like an h3. */
+#quarto-appendix.default {
+  background-color: transparent;
+  border-top-color: var(--color-link-underline);
+}
+
+#quarto-appendix.default .quarto-appendix-heading {
+  display: block;
+  font-size: 1.25rem !important; /* matches h3; Quarto forces 1em with !important */
+  font-weight: 500;
+  opacity: 1;
+  margin-bottom: 0.6rem;
+}
+
+#quarto-appendix.default .quarto-appendix-heading::after {
+  content: none;
+}
+
+/* =========================================================
+   CALLOUTS
+   ========================================================= */
+
+/* Bootstrap's stock note-blue and its pale header tint were built for
+   white pages and clash with the beige. Neutral frame from our tokens;
+   blue (the plot palette's) carries the identity. */
+.callout.callout-style-default {
+  border-right-color: var(--color-link-underline);
+  border-top-color: var(--color-link-underline);
+  border-bottom-color: var(--color-link-underline);
+}
+
+/* Body stays on the page color -- a blue wash over beige reads as flat
+   gray. Identity lives in the edge, header tint, and blue title. */
+div.callout-note.callout {
+  border-left-color: var(--color-blue);
+  background-color: transparent;
+}
+
+div.callout-note.callout-style-default > .callout-header {
+  background-color: rgba(var(--color-blue-rgb), 0.10);
+  color: var(--color-blue);
+  opacity: 1;
+}
+
+/* The info icon's blue is baked into an SVG data URI, so it has to be
+   swapped wholesale (light and dark variants). */
+div.callout-note .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%232563C9" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>') !important;
+}
+
+body.quarto-dark div.callout-note .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236B9BEF" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>') !important;
 }
 
 /* =========================================================
