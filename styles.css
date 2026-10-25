@@ -19,7 +19,7 @@
   --color-accent-rgb: 224, 115, 53;
   --color-accent-dark: #BF5A22;
   --color-accent-cool: #4A7A91; /* for functional UI state (TOC position) -- orange stays reserved for rarer, real emphasis */
-  --color-blue: #2563C9; /* the plot palette's blue -- orange's counterweight, used for info callouts */
+  --color-blue: #2563C9; /* the plot palette's blue -- orange's counterweight (currently unused in CSS) */
   --color-blue-rgb: 37, 99, 201;
   --color-link-underline: rgba(29, 29, 31, 0.18);
   --color-link-underline-hover: rgba(29, 29, 31, 0.45);
@@ -562,44 +562,36 @@ figcaption,
    CALLOUTS
    ========================================================= */
 
-/* Bootstrap's stock note-blue and its pale header tint were built for
-   white pages and clash with the beige. Neutral frame from our tokens;
-   blue (the plot palette's) carries the identity. */
-/* All callout types sit on the same surface gray as striped table rows,
-   so set-apart content reads as one family. */
-.callout.callout-style-default {
+/* Monochrome callouts: every type (note/tip/warning/important/caution)
+   sits on the striped-table surface gray with ink-colored edge, label
+   and icon. Bootstrap's per-type colors were mixed for white pages and
+   clash with the beige; the icon's shape alone tells the types apart.
+   :is() lifts specificity above Quarto's div.callout-<type>.callout rules. */
+div.callout.callout-style-default:is(.callout-note, .callout-tip, .callout-warning, .callout-important, .callout-caution) {
   background-color: var(--color-surface);
+  border-left-color: rgba(var(--color-text-rgb), 0.8);
   border-right-color: var(--color-link-underline);
   border-top-color: var(--color-link-underline);
   border-bottom-color: var(--color-link-underline);
 }
 
-/* Quarto's per-type header tints (pale yellow, green, red...) were mixed
-   for white pages; on the gray surface they muddy. Use a neutral,
-   slightly darker band for every type -- the colored left edge and
-   icon still carry the type. Note overrides this with its blue below. */
-div.callout.callout-style-default > div.callout-header { /* outranks Quarto's div.callout-<type>.callout-style-default>.callout-header */
-  background-color: rgba(var(--color-text-rgb), 0.06);
-}
-
-div.callout-note.callout {
-  border-left-color: var(--color-blue);
-}
-
-div.callout-note.callout.callout-style-default > div.callout-header {
-  background-color: rgba(var(--color-blue-rgb), 0.10);
-  color: var(--color-blue);
+/* Header band: a step darker than the box. Quarto also fades the
+   header to 85% opacity -- restore full ink for the label. */
+div.callout.callout-style-default > div.callout-header {
+  background-color: rgba(var(--color-text-rgb), 0.09);
+  color: var(--color-text);
   opacity: 1;
 }
 
-/* The info icon's blue is baked into an SVG data URI, so it has to be
-   swapped wholesale (light and dark variants). */
-div.callout-note .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%232563C9" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>') !important;
+/* Each type's icon is an SVG data URI with its color baked in.
+   brightness(0) flattens any of them to black, then opacity softens it
+   toward the ink color; dark mode inverts to near-white instead. */
+div.callout .callout-icon::before {
+  filter: brightness(0) opacity(0.8);
 }
 
-body.quarto-dark div.callout-note .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236B9BEF" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>') !important;
+body.quarto-dark div.callout .callout-icon::before {
+  filter: brightness(0) invert(1) opacity(0.85);
 }
 
 /* =========================================================
